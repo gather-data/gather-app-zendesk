@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="580px" height="580px" viewBox="0 0 580 580" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51 (57462) - http://www.bohemiancoding.com/sketch -->
+    <title>logo-navy</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="logo-navy" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect fill="#10142E" x="0" y="0" width="580" height="580"></rect>
+        <g id="Group" transform="translate(165.000000, 103.000000)">
+            <g id="Negative-G">
+                <path d="M0,25 C0,11.1928813 11.1868322,0 25.0001596,0 L250,0 L250,25 C250,38.8071187 238.813168,50 224.99984,50 L0,50 L0,25 Z" id="Rectangle-2" fill="#FE2072"></path>
+                <rect id="Rectangle-4" fill="#2F4BFF" x="50" y="150" width="75" height="75"></rect>
+                <path d="M50,125 C50,111.192881 61.1994381,100 75.0013814,100 L250,100 L250,125 C250,138.807119 238.800562,150 224.998619,150 L50,150 L50,125 Z" id="Rectangle-3" fill="#FFDA5F"></path>
+                <path d="M50,225 L174.998919,225 C188.806635,225 200,236.189845 200,250 L200,275 L75.0010815,275 C61.1933654,275 50,263.810155 50,250 L50,225 Z" id="Rectangle-3" fill="#15BF6F"></path>
+                <path d="M0,325 L224.99984,325 C238.807047,325 250,336.189845 250,350 L250,375 L25.0001596,375 C11.1929527,375 0,363.810155 0,350 L0,325 Z" id="Rectangle-2" fill="#7600FF"></path>
+            </g>
+            <g id="Negative-G" stroke-width="5">
+                <path d="M2.5,47.5 L224.99984,47.5 C237.430251,47.5 247.5,37.4286121 247.5,25 L247.5,2.5 L25.0001596,2.5 C12.569749,2.5 2.5,12.5713879 2.5,25 L2.5,47.5 Z" id="Rectangle-2" stroke="#C81759"></path>
+                <path d="M52.5,150 L52.5,225" id="Line" stroke="#001DD6" stroke-linecap="square"></path>
+                <path d="M127.5,150 L127.5,225" id="Line" stroke="#001DD6" stroke-linecap="square"></path>
+                <path d="M52.5,147.5 L224.998619,147.5 C237.422024,147.5 247.5,137.424234 247.5,125 L247.5,102.5 L75.0013814,102.5 C62.5779763,102.5 52.5,112.575766 52.5,125 L52.5,147.5 Z" id="Rectangle-3" stroke="#FFCF2E"></path>
+                <path d="M52.5,227.5 L52.5,250 C52.5,262.428323 62.5729576,272.5 75.0010815,272.5 L197.5,272.5 L197.5,250 C197.5,237.571677 187.427042,227.5 174.998919,227.5 L52.5,227.5 Z" id="Rectangle-3" stroke="#00A859"></path>
+                <path d="M2.5,327.5 L2.5,350 C2.5,362.428344 12.5725655,372.5 25.0001596,372.5 L247.5,372.5 L247.5,350 C247.5,337.571656 237.427435,327.5 224.99984,327.5 L2.5,327.5 Z" id="Rectangle-2" stroke="#5A00C3"></path>
+            </g>
+        </g>
+    </g>
+</svg>
