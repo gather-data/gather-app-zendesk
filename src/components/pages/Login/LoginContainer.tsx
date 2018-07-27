@@ -15,6 +15,10 @@ interface IProps extends ReactRouter.RouteComponentProps<{}> {
   updateToken: () => void;
 }
 
+interface ISession {
+  token: string;
+}
+
 class LoginContainer extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
@@ -41,7 +45,7 @@ class LoginContainer extends React.Component<IProps, IState> {
     });
 
     try {
-      const session = await post('/auth/email', {
+      const session = await post<ISession>('/auth/email', {
         data: {
           password,
           usernameOrEmail: email,

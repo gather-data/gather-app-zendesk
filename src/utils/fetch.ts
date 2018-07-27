@@ -47,10 +47,14 @@ const getHeaders = (contentType = 'application/json') => {
   return headers;
 };
 
-const handleResponse = async (requestData: any, response: any) => {
+const handleResponse = async <R extends {}>(
+  requestData: any,
+  response: any,
+): Promise<R> => {
   if (response.ok) {
     if (response.status === 204) {
       // No content, so return an immediately resolving promise
+      // @ts-ignore
       return Promise.resolve();
     }
     return response.json();
@@ -111,13 +115,16 @@ interface IFetchOptions {
   credentials?: 'omit' | 'same-origin' | 'include';
 }
 
-const fetchUrl = (url: string, options: IFetchOptions) =>
-  fetch(url, options).then(response => handleResponse(options, response));
+const fetchUrl = <R extends {}>(
+  url: string,
+  options: IFetchOptions,
+): Promise<R> =>
+  fetch(url, options).then(response => handleResponse<R>(options, response));
 
-const get = (
+const get = <R extends {}>(
   url: string,
   { query, headers, ...rest }: IRequestOptions = {},
-) => {
+): Promise<R> => {
   const fullUrl = getUrl(url, query);
   const newHeaders = headers || getHeaders();
   return fetchUrl(fullUrl, {
@@ -127,10 +134,10 @@ const get = (
   });
 };
 
-const post = (
+const post = <R extends {}>(
   url: string,
   { data, formData = false, query = null }: IRequestOptions = {},
-) => {
+): Promise<R> => {
   const fullUrl = getUrl(url, query);
   const headers = getHeaders(
     formData ? 'multipart/FormData' : 'application/json',
@@ -144,7 +151,7 @@ const post = (
   });
 };
 
-const del = (url: string) => {
+const del = <R extends {}>(url: string): Promise<R> => {
   const fullUrl = getUrl(url);
   const headers = getHeaders();
   return fetchUrl(fullUrl, {
@@ -153,10 +160,10 @@ const del = (url: string) => {
   });
 };
 
-const put = (
+const put = <R extends {}>(
   url: string,
   { data, formData = false }: { data?: any; formData?: any } = {},
-) => {
+): Promise<R> => {
   const fullUrl = getUrl(url);
   const headers = getHeaders(
     formData ? 'multipart/FormData' : 'application/json',
@@ -169,7 +176,10 @@ const put = (
   });
 };
 
-const patch = (url: string, { data, query = null }: IRequestOptions = {}) => {
+const patch = <R extends {}>(
+  url: string,
+  { data, query = null }: IRequestOptions = {},
+): Promise<R> => {
   const fullUrl = getUrl(url, query);
   const headers = getHeaders();
   const body = getPostBody(data);
