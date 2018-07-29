@@ -1,7 +1,7 @@
-import { colors, Link, LinkTypes } from 'gather-style';
+import { colors, Link, LinkTypes, Text, TextTypes } from 'gather-style';
 import * as React from 'react';
 // @ts-ignore
-import IOSArrowRight from 'react-icons/lib/io/ios-arrow-right';
+import ShareIcon from 'react-icons/lib/io/share';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -17,15 +17,23 @@ interface IProps {
 
 const ModuleHeader: React.SFC<IProps> = ({ name, href }) => (
   <Container>
-    <Link
-      color={colors.navy}
-      type={LinkTypes.TEXT}
-      size="large"
-      heavy
-      href={href}
-    >
-      {name}
-    </Link>
+    {href ? (
+      <Link
+        color={colors.navy}
+        type={LinkTypes.TEXT}
+        size="small"
+        heavy
+        href={href}
+        icon={<ShareIcon size={16} />}
+        iconEnd
+      >
+        {name}
+      </Link>
+    ) : (
+      <Text type={TextTypes.BODY_SMALL} heavy>
+        {name}
+      </Text>
+    )}
   </Container>
 );
 

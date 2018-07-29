@@ -1,27 +1,51 @@
-import { Flex, Link, LinkTypes, Text, TextTypes } from 'gather-style';
+import { Flex, Link, LinkTypes, mb, Text, TextTypes } from 'gather-style';
 import * as React from 'react';
 // @ts-ignore
 import IOSArrowRight from 'react-icons/lib/io/ios-arrow-right';
+import * as ReactRouter from 'react-router';
+import styled from 'styled-components';
 
 import zaf from '../../../utils/zaf';
 
 import FieldsModule from './FieldsModule';
 import { IZendeskFetchData } from './types';
 
-interface IViewProps {
+const Container = styled.div`
+  position: relative;
+`;
+
+const ModuleContainer = styled.div`
+  &:not(:last-child) {
+    ${mb(2)};
+  }
+`;
+
+interface IViewProps extends ReactRouter.RouteComponentProps<{}> {
   zendeskFetchData: IZendeskFetchData | null;
   error: string | null;
   email: string;
+  showModal: boolean;
 }
 
 class View extends React.Component<IViewProps, {}> {
+  // @ts-ignore
+  private container: React.RefObject<HTMLDivElement>;
+
+  public constructor(props: IViewProps) {
+    super(props);
+    this.container = React.createRef();
+  }
+
   public componentDidMount() {
     const { error } = this.props;
 
     if (!error) {
       zaf.invoke('resize', {
         // Add extra for buffer
-        height: '600px',
+        height:
+          `${this.container &&
+            this.container.current &&
+            this.container.current.offsetHeight}px` || '600px',
         width: '100%',
       });
     }
@@ -53,20 +77,22 @@ class View extends React.Component<IViewProps, {}> {
     }
 
     return (
-      <div>
+      <Container innerRef={this.container}>
         {zendeskFetchData.modules.map(m => (
-          <FieldsModule
-            name={m.name}
-            data={m.data}
-            error={m.error}
-            displayFields={m.display_fields}
-            viewsByViewId={zendeskFetchData.views_by_id}
-            view={zendeskFetchData.view}
-            emailField={zendeskFetchData.email_field}
-            email={email}
-          />
+          <ModuleContainer>
+            <FieldsModule
+              name={m.name}
+              data={m.data}
+              error={m.error}
+              displayFields={m.display_fields}
+              viewsByViewId={zendeskFetchData.views_by_id}
+              view={zendeskFetchData.view}
+              emailField={zendeskFetchData.email_field}
+              email={email}
+            />
+          </ModuleContainer>
         ))}
-      </div>
+      </Container>
     );
   }
 }

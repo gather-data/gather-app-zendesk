@@ -33,8 +33,8 @@ const Container = styled.div`
   overflow: hidden;
 
   ${ph(2)};
-  ${pt(1)};
-  ${pb(1)};
+  ${pt(1.5)};
+  ${pb(1.5)};
 `;
 
 const Divider =
@@ -105,11 +105,13 @@ function renderCell(
     if (view) {
       fieldProps.value =
         moduleData.field_display_names[name] || fieldProps.value;
-      const to = `/dashboard/views/details/${view.id}?${querystring.stringify({
+      const href = `https://app.gatherdata.co/dashboard/views/details/${
+        view.id
+      }?${querystring.stringify({
         [relation.to_column]: moduleData.item[name],
       })}`;
       fieldProps.fieldComponent = (
-        <LinkField to={to}>{fieldProps.value}</LinkField>
+        <LinkField href={href}>{fieldProps.value}</LinkField>
       );
     }
   }
@@ -159,9 +161,12 @@ const Module: React.SFC<IModuleProps> = ({
     <Container>
       <ModuleHeader
         name={name}
-        href={`https://app.gatherdata.co/dashboard/views/details/${
-          view.id
-        }?${emailField}=${data.item[emailField]}`}
+        href={
+          data.item[emailField] &&
+          `https://app.gatherdata.co/dashboard/views/details/${
+            view.id
+          }?${emailField}=${data.item[emailField]}`
+        }
       />
       <Divider stretch />
       {sortBy(
