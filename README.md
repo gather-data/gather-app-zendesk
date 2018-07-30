@@ -1,14 +1,9 @@
-# App name
+# Gather for Zendesk
 
-[brief description of the app]
+This is the source for Gather's Zendesk app.
 
-### The following information is displayed:
-
-* info1
-* info2
-* info3
-
-Please submit bug reports to [Insert Link](). Pull requests are welcome.
-
-### Screenshot(s):
-[put your screenshots down here.]
+## Contributing
+- `yarn`
+- `yarn build`
+- `cd build && zat server`
+- View a ticket inside Zendesk with `?zat=true`
