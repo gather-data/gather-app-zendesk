@@ -21,8 +21,8 @@ interface IState {
   isPending: boolean;
   zendeskFetchData: IZendeskFetchData | null;
   error: null | string;
-  showModal: boolean;
   requester?: IRequester;
+  activeTab: string;
 }
 
 const PendingContainer = styled(Flex)`
@@ -37,9 +37,9 @@ class ViewContainer extends React.Component<
     super(props);
 
     this.state = {
+      activeTab: 'modules',
       error: null,
       isPending: true,
-      showModal: false,
       zendeskFetchData: null,
     };
   }
@@ -59,7 +59,6 @@ class ViewContainer extends React.Component<
         },
       });
     } catch (error) {
-      console.info(error.message && error.message.detail);
       this.setState({
         error: error.message && error.message.detail,
         isPending: false,
@@ -75,13 +74,15 @@ class ViewContainer extends React.Component<
     });
   };
 
+  public updateTab = (activeTab: string) => this.setState({ activeTab });
+
   public render() {
     const {
+      activeTab,
       isPending,
       zendeskFetchData,
       error,
       requester,
-      showModal,
     } = this.state;
 
     if (isPending || !requester) {
@@ -94,10 +95,11 @@ class ViewContainer extends React.Component<
 
     return (
       <View
+        activeTab={activeTab}
+        updateTab={this.updateTab}
         zendeskFetchData={zendeskFetchData}
         error={error}
         email={requester['ticket.requester'].email}
-        showModal={showModal}
         {...this.props}
       />
     );

@@ -178,7 +178,11 @@ const Module: React.SFC<IModuleProps> = ({
       ).map((dataEntry: [string, any]) =>
         renderCell(dataEntry, viewsByViewId, data),
       )}
-      {Boolean(data.relations.toMany.length) && (
+      {Boolean(
+        data.relations.toMany.filter(
+          relation => viewsByViewId[relation.from_table],
+        ).length,
+      ) && (
         <ManyLinkContainer>
           <Divider stretch />
           {data.relations.toMany

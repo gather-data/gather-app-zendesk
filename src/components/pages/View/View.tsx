@@ -1,58 +1,54 @@
-import { Flex, Link, LinkTypes, mb, Text, TextTypes } from 'gather-style';
+import {
+  colors,
+  Flex,
+  Link,
+  LinkTypes,
+  mr,
+  pr,
+  Text,
+  TextTypes,
+} from 'gather-style';
 import * as React from 'react';
 // @ts-ignore
 import IOSArrowRight from 'react-icons/lib/io/ios-arrow-right';
-import * as ReactRouter from 'react-router';
 import styled from 'styled-components';
 
-import zaf from '../../../utils/zaf';
-
-import FieldsModule from './FieldsModule';
+import Modules from './Modules';
+import Timeline from './Timeline';
 import { IZendeskFetchData } from './types';
 
-const Container = styled.div`
-  position: relative;
-`;
-
-const ModuleContainer = styled.div`
+// @ts-ignore
+const StyledLink = styled(Link)`
   &:not(:last-child) {
-    ${mb(2)};
+    ${mr(2)};
+    ${pr(2)};
+    border-right: 1px solid ${colors.border};
   }
 `;
 
-interface IViewProps extends ReactRouter.RouteComponentProps<{}> {
-  zendeskFetchData: IZendeskFetchData | null;
+const tabs = {
+  modules: {
+    Component: Modules,
+    label: 'Customer',
+  },
+  timeline: {
+    Component: Timeline,
+    label: 'Timeline',
+  },
+};
+
+interface IProps {
+  activeTab: string;
   error: string | null;
+  updateTab: (tab: string) => void;
+  zendeskFetchData: IZendeskFetchData | null;
   email: string;
-  showModal: boolean;
 }
 
-class View extends React.Component<IViewProps, {}> {
-  // @ts-ignore
-  private container: React.RefObject<HTMLDivElement>;
-
-  public constructor(props: IViewProps) {
-    super(props);
-    this.container = React.createRef();
-  }
-
-  public componentDidMount() {
-    const { error } = this.props;
-
-    if (!error) {
-      zaf.invoke('resize', {
-        // Add extra for buffer
-        height:
-          `${this.container &&
-            this.container.current &&
-            this.container.current.offsetHeight}px` || '600px',
-        width: '100%',
-      });
-    }
-  }
-
+class View extends React.Component<IProps, {}> {
   public render() {
-    const { zendeskFetchData, error, email } = this.props;
+    const { activeTab, error, updateTab, zendeskFetchData } = this.props;
+    const { Component } = tabs[activeTab];
 
     if (error || !zendeskFetchData) {
       return (
@@ -77,22 +73,21 @@ class View extends React.Component<IViewProps, {}> {
     }
 
     return (
-      <Container innerRef={this.container}>
-        {zendeskFetchData.modules.map(m => (
-          <ModuleContainer>
-            <FieldsModule
-              name={m.name}
-              data={m.data}
-              error={m.error}
-              displayFields={m.display_fields}
-              viewsByViewId={zendeskFetchData.views_by_id}
-              view={zendeskFetchData.view}
-              emailField={zendeskFetchData.email_field}
-              email={email}
-            />
-          </ModuleContainer>
-        ))}
-      </Container>
+      <div>
+        <Flex mb={1} flow="row" alignItems="center">
+          {Object.entries(tabs).map(([key, info]) => (
+            <StyledLink
+              onClick={() => updateTab(key)}
+              type={LinkTypes.TEXT}
+              heavy={key === activeTab}
+              mr={1}
+            >
+              {info.label}
+            </StyledLink>
+          ))}
+        </Flex>
+        <Component {...this.props} />
+      </div>
     );
   }
 }
