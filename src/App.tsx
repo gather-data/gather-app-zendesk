@@ -9,7 +9,7 @@ import {
   p,
 } from 'gather-style';
 import * as History from 'history';
-import createBrowserHistory from 'history/createBrowserHistory';
+import createMemoryHistory from 'history/createMemoryHistory';
 import * as React from 'react';
 // @ts-ignore
 import IOSArrowRight from 'react-icons/lib/io/ios-arrow-right';
@@ -56,7 +56,10 @@ class App extends React.Component<{}, IAppState> {
       showModal: false,
     };
 
-    this.history = createBrowserHistory();
+    this.history = createMemoryHistory({
+      initialEntries: ['/'],
+      initialIndex: 0,
+    });
   }
 
   public componentWillUpdate() {
@@ -117,11 +120,6 @@ class App extends React.Component<{}, IAppState> {
       <Router history={this.history}>
         <Container ref={this.appContainer}>
           <Switch>
-            <GatherRoute
-              path="/index.html"
-              exact
-              redirectConditions={[{ redirectTo: '/', redirectIf: true }]}
-            />
             <GatherRoute
               exact={true}
               path="/"

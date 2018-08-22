@@ -18,7 +18,8 @@
   },
   "scripts": {
     "start": "react-scripts-ts start",
-    "build": "react-scripts-ts build && mv build/index.html build/static build/assets/",
+    "build":
+      "react-scripts-ts build && mv build/index.html build/static build/assets/",
     "test": "react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject"
   },
@@ -29,5 +30,6 @@
     "@types/react-dom": "16.0.6",
     "@types/react-router-dom": "4.3.0",
     "typescript": "2.9.2"
-  }
+  },
+  "homepage": "."
 }
