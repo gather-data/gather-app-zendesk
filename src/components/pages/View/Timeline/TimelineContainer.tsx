@@ -14,7 +14,7 @@ interface IProps {
 
 interface IState {
   isPending: boolean;
-  viewEventsState: IViewEventsResponse | null;
+  modelEventsState: IViewEventsResponse | null;
   error: null | string;
   page: number;
 }
@@ -30,8 +30,8 @@ class TimelineContainer extends React.Component<IProps, IState> {
     this.state = {
       error: null,
       isPending: true,
+      modelEventsState: null,
       page: 1,
-      viewEventsState: null,
     };
   }
 
@@ -44,12 +44,12 @@ class TimelineContainer extends React.Component<IProps, IState> {
 
     // This is the entity ID used to index the events
     const entityId =
-      zendeskFetchData.view_data[zendeskFetchData.view.source.pk_field[0]];
+      zendeskFetchData.view_data[zendeskFetchData.view.model.pk_field[0]];
     const viewId = zendeskFetchData.view.id;
 
-    let viewEventsState;
+    let modelEventsState;
     try {
-      viewEventsState = await get<IViewEventsResponse>('/views/view_events', {
+      modelEventsState = await get<IViewEventsResponse>('/events', {
         query: {
           id: entityId,
           page,
@@ -66,18 +66,21 @@ class TimelineContainer extends React.Component<IProps, IState> {
 
     this.setState({
       isPending: false,
-      viewEventsState,
+      modelEventsState,
     });
   };
 
   public changePage = async (next: boolean = true) => {
-    const { viewEventsState } = this.state;
+    const { modelEventsState } = this.state;
 
-    if (!viewEventsState) {
+    if (!modelEventsState) {
       return;
     }
 
-    const { page: currentPage, total_pages: totalPages } = viewEventsState.meta;
+    const {
+      page: currentPage,
+      total_pages: totalPages,
+    } = modelEventsState.meta;
     let nextPage = currentPage;
 
     if (next) {
@@ -99,9 +102,9 @@ class TimelineContainer extends React.Component<IProps, IState> {
   };
 
   public render() {
-    const { isPending, viewEventsState, error } = this.state;
+    const { isPending, modelEventsState, error } = this.state;
 
-    if (isPending || !viewEventsState) {
+    if (isPending || !modelEventsState) {
       return (
         <PendingContainer pt={2} flow="column">
           <Pending center />
@@ -124,11 +127,11 @@ class TimelineContainer extends React.Component<IProps, IState> {
       total_pages: totalPages,
       total_results: totalResults,
       per_page: perPage,
-    } = viewEventsState.meta;
+    } = modelEventsState.meta;
 
     return (
       <Timeline
-        viewEvents={viewEventsState.view_events}
+        modelEvents={modelEventsState.model_events}
         currentPage={currentPage}
         totalPages={totalPages}
         totalResults={totalResults}

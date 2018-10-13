@@ -84,7 +84,7 @@ const Count = styled(Text)`
 
 function renderCell(
   dataEntry: [string, any],
-  viewsByViewId: { [index: string]: IView },
+  viewsByModelId: { [index: string]: IView },
   moduleData: IModuleFetchData,
 ) {
   if (!moduleData) {
@@ -101,14 +101,14 @@ function renderCell(
   // Override if the field is a relation
   const relation = moduleData.relations.toOne[name];
   if (relation) {
-    const view = viewsByViewId[relation.to_table];
+    const view = viewsByModelId[relation.to_model];
     if (view) {
       fieldProps.value =
         moduleData.field_display_names[name] || fieldProps.value;
       const href = `https://app.gatherdata.co/dashboard/views/details/${
         view.id
       }?${querystring.stringify({
-        [relation.to_column]: moduleData.item[name],
+        [relation.to_field]: moduleData.item[name],
       })}`;
       fieldProps.fieldComponent = (
         <LinkField href={href}>{fieldProps.value}</LinkField>
@@ -128,7 +128,7 @@ interface IModuleProps {
   data: null | IModuleFetchData;
   displayFields: string[];
   name: string;
-  viewsByViewId: { [index: string]: IView };
+  viewsByModelId: { [index: string]: IView };
   error: null | {
     detail: string;
   };
@@ -140,7 +140,7 @@ interface IModuleProps {
 const Module: React.SFC<IModuleProps> = ({
   name,
   data,
-  viewsByViewId,
+  viewsByModelId,
   displayFields,
   error,
   emailField,
@@ -176,34 +176,34 @@ const Module: React.SFC<IModuleProps> = ({
         ),
         (dataEntry: [string, any]) => displayFields.indexOf(dataEntry[0]),
       ).map((dataEntry: [string, any]) =>
-        renderCell(dataEntry, viewsByViewId, data),
+        renderCell(dataEntry, viewsByModelId, data),
       )}
       {Boolean(
         data.relations.toMany.filter(
-          relation => viewsByViewId[relation.from_table],
+          relation => viewsByModelId[relation.from_model],
         ).length,
       ) && (
         <ManyLinkContainer>
           <Divider stretch />
           {data.relations.toMany
-            .filter(relation => viewsByViewId[relation.from_table])
+            .filter(relation => viewsByModelId[relation.from_model])
             .map(relation => {
-              const relatedView = viewsByViewId[relation.from_table];
+              const relatedView = viewsByModelId[relation.from_model];
 
               return [
                 <ManyLink
-                  key={relation.from_table}
+                  key={relation.from_model}
                   underline={false}
                   color={colors.text}
                   href={`https://app.gatherdata.co/dashboard/views/lists/${
                     relatedView.id
                   }?${querystring.stringify({
-                    [relation.from_column]: data.item[relation.to_column],
+                    [relation.from_field]: data.item[relation.to_field],
                   })}`}
                 >
                   <ManyLinkText>
                     <Text mr={1} type={TextTypes.BODY_SMALL} heavy>
-                      {relation.from_table}
+                      {relation.from_model_label}
                     </Text>
                     {relation.count !== null && (
                       <Count

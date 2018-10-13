@@ -66,7 +66,7 @@ const Divider =
 `;
 
 interface IViewProps {
-  viewEvents: IViewEvent[];
+  modelEvents: IViewEvent[];
   currentPage: number;
   totalPages: number;
   totalResults: number;
@@ -90,7 +90,7 @@ class View extends React.Component<IViewProps, {}> {
       totalPages,
       totalResults,
       perPage,
-      viewEvents,
+      modelEvents,
     } = this.props;
 
     return (
@@ -100,8 +100,8 @@ class View extends React.Component<IViewProps, {}> {
         </Text>
         <Divider stretch />
         <ItemContainer>
-          {viewEvents.map(viewEvent => (
-            <TimelineItem key={viewEvent.id} viewEvent={viewEvent} />
+          {modelEvents.map(modelEvent => (
+            <TimelineItem key={modelEvent.id} modelEvent={modelEvent} />
           ))}
         </ItemContainer>
         <Footer

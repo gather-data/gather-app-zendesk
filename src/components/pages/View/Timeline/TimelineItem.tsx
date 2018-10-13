@@ -13,11 +13,11 @@ const typeToComponent = {
 };
 
 interface IProps {
-  viewEvent: IViewEvent;
+  modelEvent: IViewEvent;
 }
 
-const TimelineItem: React.SFC<IProps> = ({ viewEvent, ...rest }) => {
-  const type = viewEvent.type;
+const TimelineItem: React.SFC<IProps> = ({ modelEvent, ...rest }) => {
+  const type = modelEvent.type;
 
   const Component = typeToComponent[type];
 
@@ -25,7 +25,7 @@ const TimelineItem: React.SFC<IProps> = ({ viewEvent, ...rest }) => {
     throw new Error(`Unsupport timeline type: ${type}`);
   }
 
-  return <Component viewEvent={viewEvent} {...rest} />;
+  return <Component modelEvent={modelEvent} {...rest} />;
 };
 
 export default TimelineItem;

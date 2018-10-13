@@ -84,7 +84,7 @@ class View extends React.Component<IViewProps, {}> {
               data={m.data}
               error={m.error}
               displayFields={m.display_fields}
-              viewsByViewId={zendeskFetchData.views_by_id}
+              viewsByModelId={zendeskFetchData.views_by_model_id}
               view={zendeskFetchData.view}
               emailField={zendeskFetchData.email_field}
               email={email}

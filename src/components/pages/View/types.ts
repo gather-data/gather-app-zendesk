@@ -13,14 +13,16 @@ export interface IModuleFetchData {
     relations: {
         toMany: Array<{
             count: null | number;
-            from_column: string;
-            from_table: string;
-            to_column: string;
+            from_field: string;
+            from_model_label: string;
+            from_model: string;
+            to_field: string;
         }>;
         toOne: {
             [index: string]: {
-                to_table: string;
-                to_column: string;
+                to_model: string;
+                to_model_label: string;
+                to_field: string;
             };
         };
     };
@@ -53,7 +55,7 @@ export interface IViewEvent {
 }
 
 export interface IViewEventsResponse {
-    view_events: IViewEvent[];
+    model_events: IViewEvent[];
     meta: {
         total_results: number;
         total_pages: number;
@@ -73,7 +75,7 @@ export interface IModule {
 
 export interface IView {
     id: string;
-    source: {
+    model: {
         id: string;
         type: string;
         list_flow: number;
@@ -87,13 +89,13 @@ export interface IView {
         };
         schema_mapper: any;
         type_args: any;
-        view_id: string;
+        model_id: string;
     };
 }
 
 export interface IZendeskFetchData {
     modules: IModule[];
-    views_by_id: { [index: string]: IView };
+    views_by_model_id: { [index: string]: IView };
     view: IView;
     email_field: string;
     view_data: any;

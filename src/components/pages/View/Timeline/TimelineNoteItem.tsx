@@ -28,13 +28,13 @@ const StyledIcon = styled(IOSCompose)`
 const InfoContainer = styled.div``;
 
 interface IProps {
-  viewEvent: IViewEvent;
+  modelEvent: IViewEvent;
 }
 
-const TimelineNoteItem: React.SFC<IProps> = ({ viewEvent }) => {
-  const user = `${viewEvent.user.first_name} ${viewEvent.user.last_name}`;
-  const date = viewEvent.created_time;
-  const note = viewEvent.note;
+const TimelineNoteItem: React.SFC<IProps> = ({ modelEvent }) => {
+  const user = `${modelEvent.user.first_name} ${modelEvent.user.last_name}`;
+  const date = modelEvent.created_time;
+  const note = modelEvent.note;
 
   return (
     <Container>
